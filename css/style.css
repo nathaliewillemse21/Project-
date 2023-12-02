@@ -1,0 +1,91 @@
+/* Universal Selector*/
+* *,
+::before ::after {
+  margin: 0%;
+  padding: 0%;
+  border: border-box;
+}
+
+
+/* Navbar */
+.navbar{
+    background-color: aqua;
+}
+
+.container{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+/* .welcome {
+  font-family: 'Anton';
+  background-image: linear-gradient(
+    -225deg,
+    rgb(197, 236, 236), 146, 212) 0%,
+    #052692 29%,
+    #e941ca 67%,
+    #e8c5ec 100%
+  );
+  background-size: auto auto;
+  background-clip: border-box;
+  background-size: 200% auto;
+  color: #fff;
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: textclip 2s linear infinite;
+  display: inline-block;
+}
+
+.to {
+  font-family: 'Anton';
+  background-image: linear-gradient(
+    -225deg,
+    #e8c5ec 0%,
+    #900592 29%,
+    #e941ca 67%,
+    #e8c5ec 100%
+  );
+  background-size: auto auto;
+  background-clip: border-box;
+  background-size: 200% auto;
+  color: #fff;
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: textclip 2s linear infinite;
+  display: inline-block;
+}
+
+.mochi {
+  font-family: 'Anton';
+  background-image: linear-gradient(
+    -225deg,
+    #e8c5ec 0%,
+    #900592 29%,
+    #e941ca 67%,
+    #e8c5ec 100%
+  );
+  background-size: auto auto;
+  background-clip: border-box;
+  background-size: 200% auto;
+  color: #fff;
+  background-clip: text; 
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: textclip 2s linear infinite;
+  display: inline-block;
+}
+*/
