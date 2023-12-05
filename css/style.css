@@ -13,7 +13,7 @@
 
 /* Navbar */
 .navbar{
-    background-color: aqua;
+    background-color: #84f8b2;
 }
 img [alt='logo']{
   width:20px;
@@ -51,7 +51,7 @@ body{
 }
 
 
-:is(.welcome, .to, .mochi, .about) {
+:is(.welcome, .to, .mochi, .products, .admin, .contact, .checkout) {
   font-family: 'Anton';
   background-image: linear-gradient(
     -225deg,
@@ -71,24 +71,24 @@ body{
   display: inline-block;
 }
 
-/* About Page */
-#about-content{
-  display: flex;
-  justify-content: center;
-  align-content: center;
-  box-shadow: 0 0 2rem 0 rgb(129, 141, 143);
-     backdrop-filter: blur(1rem);
-     border: 1px solid-transparent;
-     border-radius: 25px;
-     background-color: rgba(71, 65, 70, 0.5);
+
+/* Contact Page */
+
+
+
+/* Product Page */
+.card{
+  width:15rem;
+}
+.row{
+  margin-block: 1rem;
 }
 
-
-@media screen and (width < 700px) {
+/* @media screen and (width < 700px) {
     .about-paragraph{
         overflow-y: scroll;
         height: 5rem;
         scroll-snap-type: y mandatory;
     }
 
-}
+} */
