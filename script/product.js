@@ -11,7 +11,7 @@ let Products = JSON.parse(localStorage.getItem('product'))
       JSON.stringify([
         {
           image: 'https://i.postimg.cc/W1mV8yrp/ichigo-daifuku.jpg',
-          id: 0,
+          id: 1,
           name: 'Ichigo Daifuku',
           description:
             'It is filled with a sweet red bean paste and a strawberry.',
@@ -19,7 +19,7 @@ let Products = JSON.parse(localStorage.getItem('product'))
         },
         {
           image: 'https://i.postimg.cc/05HyKhGL/sakura-mochi.jpg',
-          id: 1,
+          id: 2,
           name: 'Sakura Mochi ',
           description:
             'This classic mochi is wrapped in a pickled sakura leaf.',
@@ -27,7 +27,7 @@ let Products = JSON.parse(localStorage.getItem('product'))
         },
         {
           image: 'https://i.postimg.cc/m2pWqV9G/bota-mochi.jpg',
-          id: 2,
+          id: 3,
           name: 'Bota Mochi',
           description:
             'This is a mochi where the sweet red bean filling surrounds the chewy mochi goodness.',
@@ -35,7 +35,7 @@ let Products = JSON.parse(localStorage.getItem('product'))
         },
         {
           image: 'https://i.postimg.cc/htYLCCqw/Yatsuhashi-mochi.jpg',
-          id: 3,
+          id: 4,
           name: 'Yatsuhashi Mochi',
           description:
             'This kind of mochi very unique cause of it shape and because it is filled with cinnamon. ',
@@ -43,7 +43,7 @@ let Products = JSON.parse(localStorage.getItem('product'))
         },
         {
           image: 'https://i.postimg.cc/g09wX1pY/mochi-icecream.jpg',
-          id: 4,
+          id: 5,
           name: 'Ice-Cream Mochi',
           description:
             "As if mochi, couldn't get any better, this mochi is filled with ice cream and you can pick any flavour you fancy.",
@@ -51,7 +51,7 @@ let Products = JSON.parse(localStorage.getItem('product'))
         },
         {
           image: 'https://i.postimg.cc/W4rk5T8F/Kusa-mochi.jpg',
-          id: 5,
+          id: 6,
           name: 'Kusa Mochi',
           description:
             'This mochi is filled with the sweet red bean paste and give of a hint of green tea.',
@@ -92,7 +92,7 @@ let productWrapper = document.querySelector('[data-products]');
 
 searchProduct.addEventListener('keyup', () => {
   let searchItems = Products.filter((prod) => {
-    return prod.make.toLowerCase().includes(searchProduct.value.toLowerCase());
+    return prod.name.toLowerCase().includes(searchProduct.value.toLowerCase());
   });
 
   if (searchItems.length > 0) {
@@ -152,33 +152,23 @@ sortBtn?.addEventListener('click', function () {
   }
 });
 
-
-
 // add to cart
 
-
-
-
-
 // document.addEventListener('DOMContentLoaded', function () {
- 
-  document.addEventListener('click', function (event) {
-    if (
-      event.target &&
-      event.target.getAttribute('data-add-to-cart') !== null
-    ) {
-      const productId = parseInt(
-        event.target.getAttribute('data-add-to-cart'),
-        10
-      );
-      const product = Products.find((product) => product.id === productId);
 
-      if (product) {
-        addToCart(product);
-      }
+document.addEventListener('click', function (event) {
+  if (event.target && event.target.getAttribute('data-add-to-cart') !== null) {
+    const productId = parseInt(
+      event.target.getAttribute('data-add-to-cart'),
+      10
+    );
+    const product = Products.find((product) => product.id === productId);
+
+    if (product) {
+      addToCart(product);
     }
-  });
-
+  }
+});
 
 function displayProducts() {
   let productWrapper = document.querySelector('[data-products]');
@@ -191,7 +181,7 @@ function displayProducts() {
       product.id
     }">
                 <div class="card-body">
-                    <h5 class="card-title">${product.make}</h5>
+                    <h5 class="card-title">${product.name}</h5>
                     <p class="card-text">${product.description}</p>
                     <p class="card-text">${product.price}</p>
                     <button class="btn btn-dark" data-add-to-cart="${
@@ -210,7 +200,6 @@ function addToCart(product) {
   const existingItem = cartItems.find((item) => item.id === product.id);
 
   if (existingItem) {
-   
     existingItem.quantity += 1;
   } else {
     // If the product is not in the cart, add it to the cart array
@@ -223,7 +212,6 @@ function addToCart(product) {
   }
 
   localStorage.setItem('cart', JSON.stringify(cartItems));
-
 
   alert(`${product.make} added to cart!`);
 }
@@ -244,7 +232,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
       if (product) {
         addToCart(product);
-        updateCartInfo(); 
+        updateCartInfo();
       }
     }
   });
@@ -261,7 +249,7 @@ function displayProducts() {
       product.id
     }">
                 <div class="card-body">
-                    <h5 class="card-title">${product.make}</h5>
+                    <h5 class="card-title">${product.name}</h5>
                     <p class="card-text">${product.description}</p>
                     <p class="card-text">${product.price}</p>
                     <button class="btn btn-dark" data-add-to-cart="${
@@ -283,7 +271,6 @@ function addToCart(product) {
   if (existingItem) {
     existingItem.quantity += 1;
   } else {
-
     cartItems.push({
       id: product.id,
       name: product.make,
@@ -292,22 +279,7 @@ function addToCart(product) {
     });
   }
 
-  
   localStorage.setItem('cart', JSON.stringify(cartItems));
 
-   updateCartInfo();
-}
-
-function updateCartInfo() {
-
-  const cartItems = JSON.parse(localStorage.getItem('cart')) || [];
-
-  const totalItems = cartItems.reduce((acc, item) => acc + item.quantity, 0);
-  const totalPrice = cartItems.reduce(
-    (acc, item) => acc + item.price + item.quantity,
-    0
-  );
-
-  document.getElementById('totalItems').textContent = totalItems;
-  document.getElementById('totalPrice').textContent = totalPrice.toFixed(1);
+  //updateCartInfo;
 }
