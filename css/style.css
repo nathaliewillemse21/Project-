@@ -19,7 +19,7 @@ img [alt='logo']{
   width:20px;
 }
 footer{
-  background-color: aqua;
+  background-color: whitesmoke;
   text-align: center;
   margin-top: 5px; 
 }
@@ -72,7 +72,7 @@ body{
 }
 
 
-/* Contact Page */
+
 
 
 
@@ -84,13 +84,6 @@ body{
   margin-block: 1rem;
 }
 
-
-
-/* @media screen and (width < 700px) {
-    .about-paragraph{
-        overflow-y: scroll;
-        height: 5rem;
-        scroll-snap-type: y mandatory;
-    }
-
-} */
+/* Contact Page */
+.col:hover svg {
+      transform: scale(1.2);}
