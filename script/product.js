@@ -1,7 +1,5 @@
 // Product
-const a = new Date();
-let year = a.getFullYear();
-document.getElementById('footer').innerHTML = year;
+document.getElementById('footer').innerHTML = new Date().getFullYear();
 
 // Product display
 let Products = JSON.parse(localStorage.getItem('product'))
@@ -73,7 +71,7 @@ function displayProducts() {
                         <h5 class="card-title">${product.name}</h5>
                         <p class="card-text">${product.description}</p>
                         <p class="card-text">${product.price}</p>
-                        <button class="btn btn-dark">      <span class="spinner-border spinner-border-sm d-none" role="status" aria-hidden="true"></span>Add to Cart
+                        <button class="btn btn-dark" onclick='addToCart(${JSON.stringify(product)})'>Add to Cart
 </button>
                     </div>
                 </div>`;
@@ -100,12 +98,16 @@ searchProduct.addEventListener('keyup', () => {
     searchItems.forEach((item) => {
       productWrapper.innerHTML += `
                     <div class="card">
-                        <img src="${item.image}" class="card-img-top" alt="${item.id}">
+                        <img src="${item.image}" class="card-img-top" alt="${
+        item.id
+      }">
                         <div class="card-body">
                             <h5 class="card-title">${item.name}</h5>
                             <p class="card-text">${item.description}</p>
                             <p class="card-text">${item.price}</p>
-                            <button class="btn btn-dark" data-add-to-cart>      <span class="spinner-border spinner-border-sm d-none" role="status" aria-hidden="true"></span>Add to Cart
+                            <button class="btn btn-dark" onclick='addToCart(${JSON.stringify(
+                              item
+                            )})'>      <span class="spinner-border spinner-border-sm d-none" role="status" aria-hidden="true"></span>Add to Cart
 </button>
                         </div>
                     </div>
@@ -139,12 +141,16 @@ sortBtn?.addEventListener('click', function () {
   for (let item of Products) {
     productWrapper.innerHTML += `
                     <div class="card">
-                        <img src="${item.image}" class="card-img-top" alt="${item.id}">
+                        <img src="${item.image}" class="card-img-top" alt="${
+      item.id
+    }">
                         <div class="card-body">
                             <h5 class="card-title">${item.name}</h5>
                             <p class="card-text">${item.description}</p>
                             <p class="card-text">${item.price}</p>
-                            <button class="btn btn-dark" data-add-to-cart>      <span class="spinner-border spinner-border-sm d-none" role="status" aria-hidden="true"></span>Add to Cart
+                            <button class="btn btn-dark" onclick='addToCart(${JSON.stringify(
+                              item
+                            )})'>      <span class="spinner-border spinner-border-sm d-none" role="status" aria-hidden="true"></span>Add to Cart
 </button>
                         </div>
                     </div>
@@ -154,7 +160,6 @@ sortBtn?.addEventListener('click', function () {
 
 // add to cart
 
-// document.addEventListener('DOMContentLoaded', function () {
 
 document.addEventListener('click', function (event) {
   if (event.target && event.target.getAttribute('data-add-to-cart') !== null) {
@@ -188,7 +193,7 @@ function displayProducts() {
                       product.id
                     }" onclick="addToCart(${JSON.stringify(
       product
-    )})"><span class="spinner-border spinner-border-sm d-none" role="status" aria-hidden="true"></span>Add to Cart</button>
+    )})">Add to Cart</button>
                 </div>
             </div>`;
   });
@@ -256,30 +261,19 @@ function displayProducts() {
                       product.id
                     }" onclick="addToCart(${JSON.stringify(
       product
-    )})">  <span class="spinner-border spinner-border-sm d-none" role="status" aria-hidden="true"></span> Add to Cart
+    )})">  Add to Cart
 </button>
                 </div>
             </div>`;
   });
 }
 
+let cartItems = JSON.parse(localStorage.getItem('cart')) || [];
 function addToCart(product) {
-  const cartItems = JSON.parse(localStorage.getItem('cart')) || [];
-
-  const existingItem = cartItems.find((item) => item.id === product.id);
-
-  if (existingItem) {
-    existingItem.quantity += 1;
-  } else {
-    cartItems.push({
-      id: product.id,
-      name: product.make,
-      price: product.price,
-      quantity: 1,
-    });
+  if (product) { 
+    cartItems.push(product);
+    localStorage.setItem('cart', JSON.stringify(cartItems));
   }
-
-  localStorage.setItem('cart', JSON.stringify(cartItems));
 
   //updateCartInfo;
 }

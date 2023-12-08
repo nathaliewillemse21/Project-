@@ -1,169 +1,101 @@
 // Admin
-const a = new Date();
-let year = a.getFullYear();
-document.getElementById('footer').innerHTML = year;
+document.getElementById('footer').innerHTML = new Date().getFullYear();
 
-// Sample products data
-const products = [
-  {
-          image: 'https://i.postimg.cc/W1mV8yrp/ichigo-daifuku.jpg',
-          id: 1,
-          name: 'Ichigo Daifuku',
-          description:
-            'It is filled with a sweet red bean paste and a strawberry.',
-          price: 60,
-        },
-        {
-          image: 'https://i.postimg.cc/05HyKhGL/sakura-mochi.jpg',
-          id: 2,
-          name: 'Sakura Mochi ',
-          description:
-            'This classic mochi is wrapped in a pickled sakura leaf.',
-          price: 60,
-        },
-        {
-          image: 'https://i.postimg.cc/m2pWqV9G/bota-mochi.jpg',
-          id: 3,
-          name: 'Bota Mochi',
-          description:
-            'This is a mochi where the sweet red bean filling surrounds the chewy mochi goodness.',
-          price: 65,
-        },
-        {
-          image: 'https://i.postimg.cc/htYLCCqw/Yatsuhashi-mochi.jpg',
-          id: 4,
-          name: 'Yatsuhashi Mochi',
-          description:
-            'This kind of mochi very unique cause of it shape and because it is filled with cinnamon. ',
-          price: 70,
-        },
-        {
-          image: 'https://i.postimg.cc/g09wX1pY/mochi-icecream.jpg',
-          id: 5,
-          name: 'Ice-Cream Mochi',
-          description:
-            "As if mochi, couldn't get any better, this mochi is filled with ice cream and you can pick any flavour you fancy.",
-          price: 70,
-        },
-        {
-          image: 'https://i.postimg.cc/W4rk5T8F/Kusa-mochi.jpg',
-          id: 6,
-          name: 'Kusa Mochi',
-          description:
-            'This mochi is filled with the sweet red bean paste and give of a hint of green tea.',
-          price: 75,
-            },
-            // Add more products as needed
-];
+let products = JSON.parse(localStorage.getItem('product')) || [];
 
-// Function to display products in a table
-function displayProducts() {
-  const tableContainer = document.getElementById('table');
-  const tableHTML = `
-    <table class="table">
-      <thead>
-        <tr>
-          <th>ID</th>
-          <th>Name</th>
-          <th>Price</th>
-          <th>Action</th>
-        </tr>
-      </thead>
-      <tbody>
-        ${products.map(product => `
+let tableContainer = document.querySelector('[admin-products]');
+function displayProducts(data) {
+  tableContainer.innerHTML = '';
+  try {
+    if (data) {
+      data.forEach((item, index) => {
+        tableContainer.innerHTML += `
           <tr>
-            <td>${product.id}</td>
-            <td>${product.name}</td>
-            <td>${product.price}</td>
+            <td>${item.id}</td>
+            <td>${item.name}</td>
+            <td>R${item.price}</td>
             <td>
-              <button class="btn btn-primary" onclick="editProduct(${product.id})">Edit</button>
-              <button class="btn btn-danger" onclick="deleteProduct(${product.id})">Delete</button>
-
+              <button type="button" class="btn btn-dark"
+              onclick='new EditProduct(${JSON.stringify(
+                item
+              )}, ${JSON.stringify(index)})'>Edit</button>
+              <button type="button" class="btn btn-secondary" onclick='deleteProduct(${JSON.stringify(
+                item
+              )})'>Delete</button>
             </td>
           </tr>
-        `).join('')}
-      </tbody>
-    </table>
-  `;
-  tableContainer.innerHTML = tableHTML;
+        `;
+      });
+    } else {
+      tableContainer.innerHTML = 'loading';
+    }
+  } catch (e) {
+    tableContainer.innerHTML = 'Please try again';
+  }
 }
-
+displayProducts(products);
 
 function showMessage(message, messageType) {
   const messageContainer = document.getElementById('message');
   messageContainer.innerHTML = `<div class="alert alert-${messageType}" role="alert">${message}</div>`;
 }
 
+function EditProduct(product, index) {
+  try {
+    if (product) {
+      const updatedName = prompt(
+        `Enter updated name for product ${product.name}:`,
+        product.name
+      );
+      const updatedDescription = prompt(
+        `Enter updated description for product ${product.description}:`,
+        product.description
+      );
+      const updatedPrice = prompt(
+        `Enter updated price for product ${product.price}:`,
+        product.price
+      );
+      const updatedImage = prompt(
+        `Enter the product image ${product.image}:`,
+        product.image
+      );
+      this.id = product.id;
+      this.name = updatedName;
+      this.description = updatedDescription;
+      this.price = updatedPrice;
+      this.image = updatedImage;
 
-function editProduct(productId) {
-  // Find the product to edit
-  const productToEdit = products.find((product) => product.id === productId);
-
-  // Check if the product is found
-  if (productToEdit) {
-    // Prompt the user for updated information (you can customize this)
-    const updatedName = prompt(
-      `Enter updated name for product ${productId}:`,
-      productToEdit.name
-    );
-    const updatedDescription = prompt(
-      `Enter updated description for product ${productId}:`,
-      productToEdit.description
-    );
-    const updatedPrice = prompt(
-      `Enter updated price for product ${productId}:`,
-      productToEdit.price
-    );
-
-    // Update the product with the new information
-    productToEdit.name = updatedName || productToEdit.name;
-    productToEdit.description = updatedDescription || productToEdit.description;
-    productToEdit.price = updatedPrice
-      ? parseFloat(updatedPrice)
-      : productToEdit.price;
-
-    // Display the updated products
-    displayProducts();
-  } else {
-    console.error(`Product with ID ${productId} not found.`);
+      products[index] = Object.assign({}, this);
+      localStorage.setItem('product', JSON.stringify(products));
+      displayProducts(products);
+    } else {
+      console.log('Product was not found');
+    }
+  } catch (e) {
+    console.log(e.message);
   }
 }
 
-// function editProduct(productId) {
-    
+function deleteProduct(product) {
+  const index = products.findIndex((item) => item.id === product.id);
+  if (index !== -1) {
+    console.log(index);
+    products.splice(index, 1);
+    localStorage.setItem('product', JSON.stringify(products));
+    displayProducts(products);
+  }
+}
 
-// //   showMessage(`Editing product with ID ${productId}`, 'info');
-// }
+function addProduct() {
+  const newProduct = {
+    id: products.length + 1,
+    name: confirm,
+    description: confirm,
+    price: 0,
+  };
+  products.push(newProduct);
+  localStorage.setItem('product', JSON.stringify(products));
+  displayProducts();
+}
 
-
- function deleteProduct(productId) {
-   // Logic to delete the product based on the productId
-   console.log(`Delete product with ID ${productId}`);
-   // Remove the product from the array
-   const index = products.findIndex((product) => product.id === productId);
-   if (index !== -1) {
-       products.splice(index, 1);
-     localStorage.removeItem('product')
-     displayProducts();
-   }
- }
-
- // Initial display of products
- displayProducts();
-
- function addProduct() {
-   const newProduct = {
-     id: products.length + 1,
-     name: 'New Product',
-     description: 'Description',
-     price: 0,
-   };
-   products.push(newProduct);
-   displayProducts();
- }
-
-
-
-
-
-
+document.querySelector('[add-product]').addEventListener('click', addProduct);

@@ -44,14 +44,38 @@
 </nav>
 
 
-<main class="container-fluid">
-           <h1 class="display-2"><span class="checkout fw-bold">Checkout</span></h1>
-           
-<div class="row-table"> 
-  <div class="container-tabel">
+<main class="container-fluid vh-100">
+
+
+  <div class="container d-flex justify-content-center align-content-center">
+    <div class="row">
+
+       <h1 class="display-2"><span class="checkout fw-bold">Checkout</span></h1>
+      
+      
+
+    </div> 
+</div> 
+<div class="row-table">
+  <table>
+    <thead>
+      <tr>
+        <th scope="col">ID</th>
+        <th scope="col">Name</th>
+        <th scope="col">Qty</th>
+        <th scope="col">Price</th>
+        <th scope="col">Amount</th>
+      </tr>
+    </thead>
+    <tbody checkout-data>
+
+    </tbody>
+  </table>
+</div> 
+  
    
 </main>
-    <footer class="container-fluid"> 
+    <footer class="container-fluid sticky-bottom"> 
     <div class="row">
     <p class="lead fw-bold">Mochii-Mochii &copy;Copyright<span id="footer" ></span></p>
 </div>
